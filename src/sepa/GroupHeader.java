@@ -10,6 +10,17 @@ import java.util.ArrayList;
 
 public class GroupHeader {
 	
+	/*
+	 * 
+			A. CABECERA [1...1]
+			Identificación de mensaje [1...1]
+			Fecha y hora de creación [1...1]
+			Número de operaciones [1...1]
+			Control de suma [0...1]
+			+ Parte iniciadora [1...1]
+	 * 
+	 */
+	
 	static final String FORMATO_FECHA = "dd/MM/yyyy HH:mm:ss";
 	
 	/* campos generales */
