@@ -1,6 +1,6 @@
 package sepa;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,7 +21,7 @@ public class GroupHeader {
 	 * 
 	 */
 	
-	static final String FORMATO_FECHA = "dd/MM/yyyy HH:mm:ss";
+	static final String FORMATO_FECHA = "yyyy-MM-dd'T'HH:mm:ss";
 	
 	/* campos generales */
 	
@@ -71,12 +71,11 @@ public class GroupHeader {
 	public void setCreDtTm(String creDtTm) {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat(FORMATO_FECHA);
-		String dateInString = "Friday, Jun 7, 2013 12:10:56 PM";		
+		//String dateInString = "Friday, Jun 7, 2013 12:10:56 PM";		
 			
 		try {
-
-			Date date = (Date) formatter.parse(creDtTm);
-			this.creDtTm = date;
+			Date sqlDate = (Date) formatter.parse(creDtTm);
+			this.creDtTm = sqlDate;
 
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -195,6 +194,8 @@ public class GroupHeader {
 	public void setOtraIssr(String otraIssr) {
 		this.otraIssr = otraIssr;
 	}
+	
+
 	
 
 	
