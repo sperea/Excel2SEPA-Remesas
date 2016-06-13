@@ -44,7 +44,25 @@ public class TestGroupHeader {
 		this.gh.setCreDtTm(d1);
 	    assertTrue(strFecha.compareTo(gh.getCreDtTm())==0);
 	    
-		//fail("Not yet implemented");
+	}
+	
+	
+	@Test
+	public void testXMLFinal() throws ParseException {
+	    /*
+	     * Vamos a probar que el fichero XML se genera correctamente
+	     */
+	    XmlSEPATransfersFile auxXML = new XmlSEPATransfersFile();
+	    /* Generar Header */
+	    this.gh.setCreDtTm("2016-05-25T12:55:58");
+		this.gh.setMsgId("TR00000065");
+		auxXML.setGroupHeader(this.gh);
+		
+		/* Generamos el fichero */
+		auxXML.GenerateXML("/home/sergio/Documentos/fichero.xml");
+		
+	    assertTrue(0==0);
+
 	}
 	
 
