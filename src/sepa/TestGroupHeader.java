@@ -30,8 +30,6 @@ public class TestGroupHeader {
 	    // <CreDtTm>2016-05-25T12:55:58</CreDtTm>
 	    this.gh.setCreDtTm("2016-05-25T12:55:58");
 	    assertTrue("2016-05-25T12:55:58".compareTo(gh.getCreDtTm())==0);
-	    
-		//fail("Not yet implemented");
 	}
 	
 	@Test

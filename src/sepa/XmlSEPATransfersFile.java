@@ -1,6 +1,7 @@
 package sepa;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,7 +23,7 @@ public class XmlSEPATransfersFile {
 	
 	/* información del pago 1..N */
 	
-	private ArrayList<TransferPaymentInformation> numeros = new ArrayList<TransferPaymentInformation>();
+	private ArrayList<TransferPaymentInformation> infopagos = new ArrayList<TransferPaymentInformation>();
 	
 	public GroupHeader getGroupHeader() {
 		return groupHeader;
@@ -69,7 +70,83 @@ public class XmlSEPATransfersFile {
 	          MsgId.setTextContent(this.groupHeader.getMsgId());
 	          GrpHdr.appendChild(MsgId);
 	          
+	          
+	          /*******************************************
+	           *  INFORMACION DEL PAGO
+	           *******************************************/
+	          
+	          Iterator<TransferPaymentInformation> it = infopagos.iterator();
+	          
+	          while (it.hasNext()) {
+	        	 TransferPaymentInformation auxInfoPago = it.next();
+	        	 
+	        	 Element PmtInf = doc.createElement("PmtInf");
+		         CstmrCdtTrfInitn.appendChild(PmtInf);
+		         
+		         // PmtInfId
+		         Element PmtInfId = doc.createElement("PmtInfId");
+		         PmtInfId.setTextContent(auxInfoPago.getPmtInfId());
+		         PmtInf.appendChild(PmtInfId);
+		         
+		         // PmtMtd
+		         Element PmtMtd = doc.createElement("PmtMtd");
+		         PmtMtd.setTextContent(auxInfoPago.getPmtMtd());
+		         PmtInf.appendChild(PmtMtd);
+		         
+		         // BtchBookg
+		         Element BtchBookg = doc.createElement("BtchBookg");
+		         BtchBookg.setTextContent(auxInfoPago.getBtchBookg());
+		         PmtInf.appendChild(BtchBookg);
+		         
+		         // NbOfTxs
+		         Element NbOfTxs = doc.createElement("NbOfTxs");
+		         NbOfTxs.setTextContent(auxInfoPago.getNbOfTxs());
+		         PmtInf.appendChild(NbOfTxs);
+		         
+		         // CtrlSum
+		         Element CtrlSum = doc.createElement("CtrlSum");
+		         CtrlSum.setTextContent(auxInfoPago.getCtrlSum());
+		         PmtInf.appendChild(CtrlSum);
+		         
+		         // PmtTpInf
+		         Element PmtTpInf = doc.createElement("PmtTpInf");
+		         PmtInf.appendChild(PmtTpInf);
+		         
+		         // + InstrPrty
+		         Element InstrPrty = doc.createElement("InstrPrty");
+		         InstrPrty.setTextContent(auxInfoPago.getInstrPrty());
+		         PmtTpInf.appendChild(InstrPrty);
+		         
+		         // + SvcLvl
+		         Element SvcLvl = doc.createElement("SvcLvl");
+		         PmtTpInf.appendChild(SvcLvl);
+		         
+		         // ++ CD
+		         Element CD = doc.createElement("CD");
+		         CD.setTextContent(auxInfoPago.getCd());
+		         SvcLvl.appendChild(CD);
+		         
+		         // + LclInstrm
+		         Element LclInstrm = doc.createElement("LclInstrm");
+		         PmtTpInf.appendChild(LclInstrm);
+		         
+		         // ++ CD
+		         Element Cd_LclInstrm = doc.createElement("CD");
+		         Cd_LclInstrm.setTextContent(auxInfoPago.getCd_LclInstrm());
+		         LclInstrm.appendChild(Cd_LclInstrm);
+		         
+		         // + CtgyPurp
+		         Element CtgyPurp = doc.createElement("CtgyPurp");
+		         PmtTpInf.appendChild(CtgyPurp);
+		         
+		         // ++ CD
+		         Element Cd_CtgyPurp = doc.createElement("CD");
+		         Cd_CtgyPurp.setTextContent(auxInfoPago.getCd_CtgyPurp());
+		         CtgyPurp.appendChild(Cd_CtgyPurp);
+	          }
 
+	          
+	          
 	  // *************************************************************************************************************************************
 
 

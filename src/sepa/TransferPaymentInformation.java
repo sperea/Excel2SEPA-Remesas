@@ -118,10 +118,10 @@ public class TransferPaymentInformation {
 	private String NbOfTxs;
 	private String CtrlSum;
 	private String InstrPrty;
-	private String Cd_2_9;
-	private String Cd_2_11;
+	private String Cd_SvcLvl;
+	private String Cd_LclInstrm;
 	private String Prtry_2_13;
-	private String Cd_2_15;
+	private String Cd_CtgyPurp;
 	private String ReqdExctnDt;
 	private String Nm1;
 	private String Ctry1;
@@ -278,42 +278,6 @@ public class TransferPaymentInformation {
 
 
 	/**
-	 * @return the cd_2_9
-	 */
-	public String getCd_2_9() {
-		return Cd_2_9;
-	}
-
-
-
-	/**
-	 * @param cd_2_9 the cd_2_9 to set
-	 */
-	public void setCd_2_9(String cd_2_9) {
-		Cd_2_9 = cd_2_9;
-	}
-
-
-
-	/**
-	 * @return the cd_2_11
-	 */
-	public String getCd_2_11() {
-		return Cd_2_11;
-	}
-
-
-
-	/**
-	 * @param cd_2_11 the cd_2_11 to set
-	 */
-	public void setCd_2_11(String cd_2_11) {
-		Cd_2_11 = cd_2_11;
-	}
-
-
-
-	/**
 	 * @return the prtry_2_13
 	 */
 	public String getPrtry_2_13() {
@@ -327,24 +291,6 @@ public class TransferPaymentInformation {
 	 */
 	public void setPrtry_2_13(String prtry_2_13) {
 		Prtry_2_13 = prtry_2_13;
-	}
-
-
-
-	/**
-	 * @return the cd_2_15
-	 */
-	public String getCd_2_15() {
-		return Cd_2_15;
-	}
-
-
-
-	/**
-	 * @param cd_2_15 the cd_2_15 to set
-	 */
-	public void setCd_2_15(String cd_2_15) {
-		Cd_2_15 = cd_2_15;
 	}
 
 
@@ -1067,6 +1013,39 @@ public class TransferPaymentInformation {
 		this.numeros = numeros;
 	}
 
+	public String getCd_SvcLvl() {
+		return Cd_SvcLvl;
+	}
+
+
+
+	public void setCd_SvcLvl(String cd_SvcLvl) {
+		Cd_SvcLvl = cd_SvcLvl;
+	}
+
+
+
+	public String getCd_LclInstrm() {
+		return Cd_LclInstrm;
+	}
+
+
+
+	public void setCd_LclInstrm(String cd_LclInstrm) {
+		Cd_LclInstrm = cd_LclInstrm;
+	}
+
+
+
+	public String getCd_CtgyPurp() {
+		return Cd_CtgyPurp;
+	}
+
+
+
+	public void setCd_CtgyPurp(String cd_CtgyPurp) {
+		Cd_CtgyPurp = cd_CtgyPurp;
+	}
 	
 	
 
