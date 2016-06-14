@@ -1,6 +1,6 @@
 # generador_excel2sepa
 
-Este script permite convertir un fichero Excel de transferencias en un fichero XML compatible con el estándar fijado por la SEPA.
+Este programa permite convertir un fichero Excel de transferencias en un fichero XML compatible con el estándar fijado por la SEPA.
 
 NOTA: Este programa está diseñado para resolver un caso muy concreto y los test que voy a realizar sobre él se ajustan a ESE caso concreto. No me hago resposanble de los fallos que pueda dar al intentar resolver TU caso concreto: es tu obligación estudiar el código, probarlo y adaptarlo a tus necesidades. 
 

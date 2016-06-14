@@ -9,6 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import javax.swing.JMenu;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JTextPane;
+import java.awt.Window.Type;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.awt.event.ActionEvent;
 
 public class frmTransferencias {
 	
@@ -49,38 +56,48 @@ public class frmTransferencias {
 		
 		// Inicializar ventana
 		frmGeneracinDeFicheros = new JFrame();
+		frmGeneracinDeFicheros.setType(Type.UTILITY);
+		frmGeneracinDeFicheros.setResizable(false);
 		frmGeneracinDeFicheros.setTitle("Generación de ficheros de transferencias");
 		frmGeneracinDeFicheros.setBounds(100, 100, 450, 300);
 		frmGeneracinDeFicheros.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmGeneracinDeFicheros.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmGeneracinDeFicheros.getContentPane().setLayout(null);
 		
 		// Panel para menú principal
 		panelNorte = new JPanel();
+		panelNorte.setBounds(0, 0, 450, 10);
 		panelNorte.setLayout(new FlowLayout());
-
-		// Menu principal
-		JMenuBar menuBar = new JMenuBar();
 		
 		// Organizar elementos en ventana
-		frmGeneracinDeFicheros.getContentPane().add(panelNorte,BorderLayout.NORTH);
-		panelNorte.add(menuBar);
-		JMenuItem mntmNuevoFichero = new JMenuItem("Nuevo fichero");
-		menuBar.add(mntmNuevoFichero);
-		mntmNuevoFichero.setHorizontalAlignment(SwingConstants.LEFT);
+		frmGeneracinDeFicheros.getContentPane().add(panelNorte);
 		
-		JMenuItem mntmHistrico = new JMenuItem("Histórico");
-		menuBar.add(mntmHistrico);
-		mntmHistrico.setHorizontalAlignment(SwingConstants.LEFT);
+		JButton btnCargarExcel = new JButton("Cargar Excel");
+		btnCargarExcel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CargarExcel();
+			}
+		});
+		btnCargarExcel.setBounds(30, 50, 173, 25);
+		frmGeneracinDeFicheros.getContentPane().add(btnCargarExcel);
 		
-		JMenu menu = new JMenu("Preferencias");
-		menu.setHorizontalAlignment(SwingConstants.LEFT);
-		menuBar.add(menu);
+		JButton btnGenerarxml = new JButton("GenerarXML");
+		btnGenerarxml.setBounds(250, 50, 173, 25);
+		frmGeneracinDeFicheros.getContentPane().add(btnGenerarxml);
 		
-		JMenuItem mntmCompaas = new JMenuItem("Compañías");
-		menu.add(mntmCompaas);
+		JTextPane textPane = new JTextPane();
+		textPane.setBounds(12, 115, 411, 145);
+		frmGeneracinDeFicheros.getContentPane().add(textPane);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("General");
-		menu.add(mntmNewMenuItem);
 	}
 
+	private void CargarExcel() {
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		int result = fileChooser.showOpenDialog(this.frmGeneracinDeFicheros);
+		if (result == JFileChooser.APPROVE_OPTION) {
+		    File selectedFile = fileChooser.getSelectedFile();
+		    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+		}
+	}
 }
