@@ -1036,7 +1036,7 @@ public class TransferPaymentInformation {
 	}
 
 	public String getReqdExctnDt2String() {
-		DateFormat df = new SimpleDateFormat(""yyyy-MM-dd");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String txtReqdExctnDt = df.format(ReqdExctnDt);
 		return txtReqdExctnDt;
 	}
