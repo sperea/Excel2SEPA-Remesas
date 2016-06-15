@@ -143,6 +143,11 @@ public class XmlSEPATransfersFile {
 		         Element Cd_CtgyPurp = doc.createElement("CD");
 		         Cd_CtgyPurp.setTextContent(auxInfoPago.getCd_CtgyPurp());
 		         CtgyPurp.appendChild(Cd_CtgyPurp);
+		         
+		         // + ReqdExctnDt
+		         Element ReqdExctnDt = doc.createElement("ReqdExctnDt");
+		         ReqdExctnDt.setTextContent(auxInfoPago.getReqdExctnDt2String()); /* dd-mm-yyyy */
+		         PmtInf.appendChild(ReqdExctnDt);
 	          }
 
 	          

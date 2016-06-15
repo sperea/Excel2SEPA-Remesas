@@ -1,6 +1,8 @@
 package sepa;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class TransferPaymentInformation {
@@ -122,7 +124,7 @@ public class TransferPaymentInformation {
 	private String Cd_LclInstrm;
 	private String Prtry_2_13;
 	private String Cd_CtgyPurp;
-	private String ReqdExctnDt;
+	private Date ReqdExctnDt;
 	private String Nm1;
 	private String Ctry1;
 	private String AdrLine1;
@@ -291,24 +293,6 @@ public class TransferPaymentInformation {
 	 */
 	public void setPrtry_2_13(String prtry_2_13) {
 		Prtry_2_13 = prtry_2_13;
-	}
-
-
-
-	/**
-	 * @return the reqdExctnDt
-	 */
-	public String getReqdExctnDt() {
-		return ReqdExctnDt;
-	}
-
-
-
-	/**
-	 * @param reqdExctnDt the reqdExctnDt to set
-	 */
-	public void setReqdExctnDt(String reqdExctnDt) {
-		ReqdExctnDt = reqdExctnDt;
 	}
 
 
@@ -1047,6 +1031,19 @@ public class TransferPaymentInformation {
 		Cd_CtgyPurp = cd_CtgyPurp;
 	}
 	
-	
+	public Date getReqdExctnDt() {
+		return ReqdExctnDt;
+	}
+
+	public String getReqdExctnDt2String() {
+		DateFormat df = new SimpleDateFormat(""yyyy-MM-dd");
+		String txtReqdExctnDt = df.format(ReqdExctnDt);
+		return txtReqdExctnDt;
+	}
+
+	public void setReqdExctnDt(Date reqdExctnDt) {
+		ReqdExctnDt = reqdExctnDt;
+	}
+
 
 }

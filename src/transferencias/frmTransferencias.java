@@ -2,13 +2,8 @@ package transferencias;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import java.awt.BorderLayout;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
-import javax.swing.JMenu;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextPane;
