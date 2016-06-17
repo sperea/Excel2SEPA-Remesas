@@ -129,7 +129,8 @@ public class TransferPaymentInformation {
 	private String Ctry1;
 	private String AdrLine1;
 	private String BICOrBEI1;
-	private String Id1;
+
+	private String Id_Dbtr;
 	private String Cd1;
 	private String Prtry1;
 	private String Issr1;
@@ -149,6 +150,7 @@ public class TransferPaymentInformation {
 	private String Nm;
 	private String Ctry;
 	private String AdrLine;
+	private String AdrLine2; /* linea 2 de la direccion */
 	private String BICOrBEI;
 	private String Id11111;
 	private String Cd111;
@@ -365,24 +367,6 @@ public class TransferPaymentInformation {
 	 */
 	public void setBICOrBEI1(String bICOrBEI1) {
 		BICOrBEI1 = bICOrBEI1;
-	}
-
-
-
-	/**
-	 * @return the id1
-	 */
-	public String getId1() {
-		return Id1;
-	}
-
-
-
-	/**
-	 * @param id1 the id1 to set
-	 */
-	public void setId1(String id1) {
-		Id1 = id1;
 	}
 
 
@@ -1045,6 +1029,23 @@ public class TransferPaymentInformation {
 	public void setReqdExctnDt(Date reqdExctnDt) {
 		ReqdExctnDt = reqdExctnDt;
 	}
+	
+	public String getAdrLine2() {
+		return AdrLine2;
+	}
 
+	public void setAdrLine2(String adrLine2) {
+		AdrLine2 = adrLine2;
+	}
+
+	public String getId_Dbtr() {
+		return Id_Dbtr;
+	}
+
+
+
+	public void setId_Dbtr(String id_Dbtr) {
+		Id_Dbtr = id_Dbtr;
+	}
 
 }

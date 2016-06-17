@@ -148,6 +148,74 @@ public class XmlSEPATransfersFile {
 		         Element ReqdExctnDt = doc.createElement("ReqdExctnDt");
 		         ReqdExctnDt.setTextContent(auxInfoPago.getReqdExctnDt2String()); /* dd-mm-yyyy */
 		         PmtInf.appendChild(ReqdExctnDt);
+		         
+		         // + Dbtr
+		         Element Dbtr = doc.createElement("Dbtr");
+		         PmtInf.appendChild(Dbtr);
+		         
+		         // ++ Nm
+		         Element Nm = doc.createElement("Nm");
+		         Nm.setTextContent(auxInfoPago.getNm()); 
+		         Dbtr.appendChild(Nm); 
+		         
+		         // ++ PstlAdr
+		         Element PstlAdr = doc.createElement("PstlAdr");
+		         Dbtr.appendChild(PstlAdr); 
+		         
+		         // +++ Ctry
+		         Element Ctry = doc.createElement("Ctry");
+		         Ctry.setTextContent(auxInfoPago.getCtry());
+		         PstlAdr.appendChild(Ctry); 
+		         
+		         // +++ AdrLine (lineas 1 y 2)
+		         Element AdrLine = doc.createElement("AdrLine");
+		         AdrLine.setTextContent(auxInfoPago.getAdrLine());
+		         PstlAdr.appendChild(AdrLine); 
+		         Element AdrLine2 = doc.createElement("AdrLine2");
+		         AdrLine2.setTextContent(auxInfoPago.getAdrLine2());
+		         PstlAdr.appendChild(AdrLine2); 
+		         
+		         // ++ Id
+		         Element Id_Dbtr = doc.createElement("Id");
+		         Dbtr.appendChild(Id_Dbtr); 
+		         
+		         // +++ OrgId
+		         Element OrgId = doc.createElement("OrgId");
+		         Id_Dbtr.appendChild(OrgId); 
+		         
+		         // ++++ Othr_OrgId
+		         Element Othr_OrgId = doc.createElement("Othr");
+		         OrgId.appendChild(Othr_OrgId); 
+		         
+		         // +++++ Id_OrgId
+		         Element Id_OrgId = doc.createElement("Id");
+		         Id_OrgId.setTextContent(auxInfoPago.getId_Dbtr());
+		         Othr_OrgId.appendChild(Id_OrgId);
+		         
+		         // + DbtrAcct
+		         Element DbtrAcct = doc.createElement("DbtrAcct");
+		         PmtInf.appendChild(DbtrAcct);
+		         
+		         // ++ Id_DbtrAcct
+		         Element Id_DbtrAcct = doc.createElement("Id");
+		         DbtrAcct.appendChild(Id_DbtrAcct); 
+		         
+		         // +++ Id_Iban
+		         Element Id_Iban = doc.createElement("IBAN");
+		         Id_DbtrAcct.appendChild(Id_Iban);
+		         
+		         // ++ IBAN
+		         Element Iban = doc.createElement("IBAN");
+		         Iban.setTextContent(auxInfoPago.getIBAN());
+		         Id_Iban.appendChild(Iban);
+		         
+		         // ++ CCY
+		         Element ccy = doc.createElement("Ccy");
+		         ccy.setTextContent(auxInfoPago.getCcy());
+		         DbtrAcct.appendChild(ccy);
+		         
+		         
+		         
 	          }
 
 	          
