@@ -968,7 +968,7 @@ public class TransferPaymentInformation {
 	/**
 	 * @return the numeros
 	 */
-	public ArrayList<TransferPaymentItem> getNumeros() {
+	public ArrayList<TransferPaymentItem> getPagos() {
 		return numeros;
 	}
 
@@ -977,7 +977,7 @@ public class TransferPaymentInformation {
 	/**
 	 * @param numeros the numeros to set
 	 */
-	public void setNumeros(ArrayList<TransferPaymentItem> numeros) {
+	public void setPagos(ArrayList<TransferPaymentItem> numeros) {
 		this.numeros = numeros;
 	}
 

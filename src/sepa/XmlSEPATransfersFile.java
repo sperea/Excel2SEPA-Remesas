@@ -235,13 +235,55 @@ public class XmlSEPATransfersFile {
 		         Element nm = doc.createElement("Nm");
 		         nm.setTextContent(auxInfoPago.getNm());
 		         UltmtDbtr.appendChild(nm); 
+		         
+		          /*******************************************
+		           *  LISTADO DE PAGOS
+		           *******************************************/
+		          
+		          ArrayList<TransferPaymentItem> pagos = auxInfoPago.getPagos();
+		          Iterator<TransferPaymentItem> iteradorPagos = pagos.iterator();
+		          while(it.hasNext())
+		          {
+		        	  TransferPaymentItem pagoActual = iteradorPagos.next();
+		        	  
+				         // + CdtTrfTxInf
+				         Element CdtTrfTxInf = doc.createElement("CdtTrfTxInf");
+				         PmtInf.appendChild(CdtTrfTxInf);
+				         
+				         // ++ PmtId
+				         Element PmtId = doc.createElement("PmtId");
+				         CdtTrfTxInf.appendChild(PmtId);
+		        	  
+				         // +++ InstrId
+				         Element InstrId = doc.createElement("InstrId");
+				         InstrId.setTextContent(pagoActual.getInstrId());
+				         PmtId.appendChild(InstrId); 
+				         
+				         // +++ EndToEndId
+				         Element EndToEndId = doc.createElement("EndToEndId");
+				         EndToEndId.setTextContent(pagoActual.getEndToEndId());
+				         PmtId.appendChild(EndToEndId); 
+				         
+				         // ++ PmtTpInf
+				         Element PmtTpInf_Pago = doc.createElement("PmtTpInf");
+				         CdtTrfTxInf.appendChild(PmtTpInf_Pago);
+				         
+				         // +++ SvcLvl
+				         Element SvcLvl_Pago = doc.createElement("SvcLvl");
+				         PmtTpInf_Pago.appendChild(SvcLvl_Pago);
+				         
+				         // ++++ Cd
+				         Element cd_SvcLvl = doc.createElement("Cd");
+				         cd_SvcLvl.setTextContent(pagoActual.getInstrId());
+				         SvcLvl_Pago.appendChild(cd_SvcLvl); 
+		          }
+
+		          
+		        		  
 	          }
 
 	          
-	          /*******************************************
-	           *  LISTADO DE PAGOS
-	           *******************************************/
-	          
+
 	          
 	  // *************************************************************************************************************************************
 
