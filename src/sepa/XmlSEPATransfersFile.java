@@ -214,10 +214,33 @@ public class XmlSEPATransfersFile {
 		         ccy.setTextContent(auxInfoPago.getCcy());
 		         DbtrAcct.appendChild(ccy);
 		         
+		         // + DbtrAgt
+		         Element DbtrAgt = doc.createElement("DbtrAgt");
+		         PmtInf.appendChild(DbtrAgt);
 		         
+		         // ++ FinInstnId
+		         Element FinInstnId = doc.createElement("FinInstnId");
+		         DbtrAgt.appendChild(FinInstnId); 
 		         
+		         // +++ BIC
+		         Element bic = doc.createElement("BIC");
+		         bic.setTextContent(auxInfoPago.getBIC());
+		         FinInstnId.appendChild(bic);
+		         
+		         // + UltmtDbtr
+		         Element UltmtDbtr = doc.createElement("UltmtDbtr");
+		         PmtInf.appendChild(UltmtDbtr);
+		         
+		         // ++ Nm
+		         Element nm = doc.createElement("Nm");
+		         nm.setTextContent(auxInfoPago.getNm());
+		         UltmtDbtr.appendChild(nm); 
 	          }
 
+	          
+	          /*******************************************
+	           *  LISTADO DE PAGOS
+	           *******************************************/
 	          
 	          
 	  // *************************************************************************************************************************************
