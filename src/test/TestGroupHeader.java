@@ -10,11 +10,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import sepa.GroupHeader;
+import sepa.TransferPaymentInformation;
 import sepa.XmlSEPATransfersFile;
 
 public class TestGroupHeader {
 
 	private GroupHeader gh;
+	private TransferPaymentInformation tp;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -52,10 +54,32 @@ public class TestGroupHeader {
 	     * Vamos a probar que el fichero XML se genera correctamente
 	     */
 	    XmlSEPATransfersFile auxXML = new XmlSEPATransfersFile();
+	    
 	    /* Generar Header */
+	    
 	    this.gh.setCreDtTm("2016-05-25T12:55:58");
 		this.gh.setMsgId("TR00000065");
+		this.gh.setNbOfTxs("21");
+		this.gh.setCtrlSum("156965.10");
+		this.gh.setNm("JLA ASOCIADOS");
+		this.gh.setId("A79261020002");
+		
 		auxXML.setGroupHeader(this.gh);
+		
+		/* generar pagos */
+		
+		/* datos generales y agregados */
+		
+		this.tp.setPmtInfId("LOTE-00000065"); 
+		this.tp.setPmtMtd("TRF");
+		this.tp.setBtchBookg("false");
+		this.tp.setNbOfTxs("21");
+		this.tp.setCtrlSum("156965.10");
+		this.tp.setInstrPrty("HIGH");
+		this.tp.setCd("SEPA");
+		this.tp.setCd_LclInstrm("TRF");
+		this.tp.setCd_CtgyPurp("SUPP");
+		this.tp.setReqdExctnDt("2016-05-25");
 		
 		/* Generamos el fichero */
 		auxXML.GenerateXML("/home/sergio/Documentos/fichero.xml");

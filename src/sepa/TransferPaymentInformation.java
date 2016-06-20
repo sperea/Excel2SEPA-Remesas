@@ -2,6 +2,7 @@ package sepa;
 
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -1028,6 +1029,20 @@ public class TransferPaymentInformation {
 
 	public void setReqdExctnDt(Date reqdExctnDt) {
 		ReqdExctnDt = reqdExctnDt;
+	}
+	
+	public void setReqdExctnDt(String reqdExctnDt) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		//String dateInString = "Friday, Jun 7, 2013 12:10:56 PM";		
+			
+		try {
+			Date sqlDate = (Date) formatter.parse(reqdExctnDt);
+			this.ReqdExctnDt = sqlDate;
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public String getAdrLine2() {

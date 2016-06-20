@@ -70,6 +70,37 @@ public class XmlSEPATransfersFile {
 	          MsgId.setTextContent(this.groupHeader.getMsgId());
 	          GrpHdr.appendChild(MsgId);
 	          
+	          Element NbOfTxs_header = doc.createElement("NbOfTxs");
+	          NbOfTxs_header.setTextContent(this.groupHeader.getNbOfTxs());
+	          GrpHdr.appendChild(NbOfTxs_header);
+	          
+	          Element CtrlSum_header = doc.createElement("CtrlSum");
+	          CtrlSum_header.setTextContent(this.groupHeader.getCtrlSum());
+	          GrpHdr.appendChild(CtrlSum_header);
+	          
+	          // InitgPty
+	          Element InitgPty = doc.createElement("InitgPty");
+	          GrpHdr.appendChild(InitgPty);
+	          
+	          Element Nm_header = doc.createElement("Nm");
+	          Nm_header.setTextContent(this.groupHeader.getNm());
+	          InitgPty.appendChild(Nm_header);
+	          
+	          // + Id
+	          Element Id_header = doc.createElement("Id");
+	          InitgPty.appendChild(Id_header);
+	          
+	          // ++ OrgId
+	          Element OrgId_header = doc.createElement("OrgId");
+	          Id_header.appendChild(OrgId_header);
+	          
+	          // +++ Othr
+	          Element Othr_header = doc.createElement("Othr");
+	          OrgId_header.appendChild(Othr_header);
+	          
+	          Element Id_value_header = doc.createElement("Id_value_header");
+	          Id_value_header.setTextContent(this.groupHeader.getId());
+	          Othr_header.appendChild(CtrlSum_header);
 	          
 	          /*******************************************
 	           *  INFORMACION DEL PAGO
@@ -246,45 +277,40 @@ public class XmlSEPATransfersFile {
 		          {
 		        	  TransferPaymentItem pagoActual = iteradorPagos.next();
 		        	  
-				         // + CdtTrfTxInf
-				         Element CdtTrfTxInf = doc.createElement("CdtTrfTxInf");
-				         PmtInf.appendChild(CdtTrfTxInf);
-				         
-				         // ++ PmtId
-				         Element PmtId = doc.createElement("PmtId");
-				         CdtTrfTxInf.appendChild(PmtId);
-		        	  
-				         // +++ InstrId
-				         Element InstrId = doc.createElement("InstrId");
-				         InstrId.setTextContent(pagoActual.getInstrId());
-				         PmtId.appendChild(InstrId); 
-				         
-				         // +++ EndToEndId
-				         Element EndToEndId = doc.createElement("EndToEndId");
-				         EndToEndId.setTextContent(pagoActual.getEndToEndId());
-				         PmtId.appendChild(EndToEndId); 
-				         
-				         // ++ PmtTpInf
-				         Element PmtTpInf_Pago = doc.createElement("PmtTpInf");
-				         CdtTrfTxInf.appendChild(PmtTpInf_Pago);
-				         
-				         // +++ SvcLvl
-				         Element SvcLvl_Pago = doc.createElement("SvcLvl");
-				         PmtTpInf_Pago.appendChild(SvcLvl_Pago);
-				         
-				         // ++++ Cd
-				         Element cd_SvcLvl = doc.createElement("Cd");
-				         cd_SvcLvl.setTextContent(pagoActual.getInstrId());
-				         SvcLvl_Pago.appendChild(cd_SvcLvl); 
-		          }
-
-		          
-		        		  
+			         // + CdtTrfTxInf
+			         Element CdtTrfTxInf = doc.createElement("CdtTrfTxInf");
+			         PmtInf.appendChild(CdtTrfTxInf);
+			         
+			         // ++ PmtId
+			         Element PmtId = doc.createElement("PmtId");
+			         CdtTrfTxInf.appendChild(PmtId);
+	        	  
+			         // +++ InstrId
+			         Element InstrId = doc.createElement("InstrId");
+			         InstrId.setTextContent(pagoActual.getInstrId());
+			         PmtId.appendChild(InstrId); 
+			         
+			         // +++ EndToEndId
+			         Element EndToEndId = doc.createElement("EndToEndId");
+			         EndToEndId.setTextContent(pagoActual.getEndToEndId());
+			         PmtId.appendChild(EndToEndId); 
+			         
+			         // ++ PmtTpInf
+			         Element PmtTpInf_Pago = doc.createElement("PmtTpInf");
+			         CdtTrfTxInf.appendChild(PmtTpInf_Pago);
+			         
+			         // +++ SvcLvl
+			         Element SvcLvl_Pago = doc.createElement("SvcLvl");
+			         PmtTpInf_Pago.appendChild(SvcLvl_Pago);
+			         
+			         // ++++ Cd
+			         Element cd_SvcLvl = doc.createElement("Cd");
+			         cd_SvcLvl.setTextContent(pagoActual.getInstrId());
+			         SvcLvl_Pago.appendChild(cd_SvcLvl); 
+		          }	  
 	          }
 
-	          
-
-	          
+   
 	  // *************************************************************************************************************************************
 
 
