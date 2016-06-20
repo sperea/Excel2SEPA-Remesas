@@ -55,6 +55,8 @@ public class TestGroupHeader {
 	     */
 	    XmlSEPATransfersFile auxXML = new XmlSEPATransfersFile();
 	    
+	    /* datos ficticios */
+	    
 	    /* Generar Header */
 	    
 	    this.gh.setCreDtTm("2016-05-25T12:55:58");
@@ -80,6 +82,18 @@ public class TestGroupHeader {
 		this.tp.setCd_LclInstrm("TRF");
 		this.tp.setCd_CtgyPurp("SUPP");
 		this.tp.setReqdExctnDt("2016-05-25");
+		this.tp.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
+		this.tp.setCtry("ES");
+		this.tp.setAdrLine("SAGASTA, 32, 5º DERECHA");
+		this.tp.setAdrLine2("28004 MADRID");
+		this.tp.setId_Dbtr("A79261020002");
+		this.tp.setIBAN("ES0400750322880600466676");
+		this.tp.setCcy("EUR");
+		this.tp.setBIC("POPUESMMXXX");
+		this.tp.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
+		
+		
+		
 		
 		/* Generamos el fichero */
 		auxXML.GenerateXML("/home/sergio/Documentos/fichero.xml");
