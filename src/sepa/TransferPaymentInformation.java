@@ -1,6 +1,6 @@
 package sepa;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -182,7 +182,12 @@ public class TransferPaymentInformation {
 	}
 
 
-
+	public void InsertarPago (TransferPaymentItem _pago)
+	{
+		this.numeros.add(_pago);
+	}
+	
+	
 	/**
 	 * @param pmtInfId the pmtInfId to set
 	 */
@@ -1031,12 +1036,13 @@ public class TransferPaymentInformation {
 		ReqdExctnDt = reqdExctnDt;
 	}
 	
-	public void setReqdExctnDt(String reqdExctnDt) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		//String dateInString = "Friday, Jun 7, 2013 12:10:56 PM";		
+	public void setReqdExctnDt(String _reqdExctnDt) {
+	
 			
 		try {
-			Date sqlDate = (Date) formatter.parse(reqdExctnDt);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			//String dateInString = "Friday, Jun 7, 2013 12:10:56 PM";	
+			Date sqlDate = (Date) formatter.parse(_reqdExctnDt);
 			this.ReqdExctnDt = sqlDate;
 
 		} catch (ParseException e) {

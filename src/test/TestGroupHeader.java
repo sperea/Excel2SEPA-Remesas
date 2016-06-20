@@ -18,9 +18,20 @@ public class TestGroupHeader {
 	private GroupHeader gh;
 	private TransferPaymentInformation tp;
 	
+	private XmlSEPATransfersFile xmlPrueba;
+	
+	public XmlSEPATransfersFile getXmlPrueba() {
+		return xmlPrueba;
+	}
+
+	public void setXmlPrueba(XmlSEPATransfersFile xmlPrueba) {
+		this.xmlPrueba = xmlPrueba;
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		gh = new GroupHeader();
+		tp = new TransferPaymentInformation();
 	}
 	
 	@After
@@ -92,7 +103,12 @@ public class TestGroupHeader {
 		this.tp.setBIC("POPUESMMXXX");
 		this.tp.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
 		
+		/* generamos un pago y lo insertamos */
+
 		
+		auxXML.InsertarPago(this.tp);
+		
+		/* datos de los pagos */
 		
 		
 		/* Generamos el fichero */

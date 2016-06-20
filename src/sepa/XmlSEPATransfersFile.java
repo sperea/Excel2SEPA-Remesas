@@ -21,9 +21,18 @@ public class XmlSEPATransfersFile {
 
 	private GroupHeader groupHeader;
 	
+	private TransferPaymentInformation payment;
+	
+	
 	/* información del pago 1..N */
 	
+
 	private ArrayList<TransferPaymentInformation> infopagos = new ArrayList<TransferPaymentInformation>();
+	
+	public void InsertarPago(TransferPaymentInformation pago)
+	{
+		this.infopagos.add(pago);
+	}
 	
 	public GroupHeader getGroupHeader() {
 		return groupHeader;
@@ -33,6 +42,13 @@ public class XmlSEPATransfersFile {
 		this.groupHeader = groupHeader;
 	}
 
+	public TransferPaymentInformation getPayment() {
+		return payment;
+	}
+
+	public void setPayment(TransferPaymentInformation payment) {
+		this.payment = payment;
+	}
 	
 	public void GenerateXML(String filePath)
 	{
