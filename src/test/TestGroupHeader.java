@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import sepa.GroupHeader;
 import sepa.TransferPaymentInformation;
+import sepa.TransferPaymentItem;
 import sepa.XmlSEPATransfersFile;
 
 public class TestGroupHeader {
@@ -104,7 +105,13 @@ public class TestGroupHeader {
 		this.tp.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
 		
 		/* generamos un pago y lo insertamos */
-
+		
+		TransferPaymentItem pagoItem = new TransferPaymentItem();
+		pagoItem.setInstrId("INSTRID-02-01");
+		pagoItem.setEndToEndId("ENDTOEND-02");
+		pagoItem.setCd_SvcLvl("SEPA");
+		pagoItem.setInstdAmt(265.33);
+		pagoItem.setCtry_PstlAdr_Cdtr("ES");
 		
 		auxXML.InsertarPago(this.tp);
 		

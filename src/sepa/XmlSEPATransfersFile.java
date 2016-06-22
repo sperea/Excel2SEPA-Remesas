@@ -321,8 +321,90 @@ public class XmlSEPATransfersFile {
 			         
 			         // ++++ Cd
 			         Element cd_SvcLvl = doc.createElement("Cd");
-			         cd_SvcLvl.setTextContent(pagoActual.getInstrId());
+			         cd_SvcLvl.setTextContent(pagoActual.getCd_SvcLvl());
 			         SvcLvl_Pago.appendChild(cd_SvcLvl); 
+			         
+			         // ++ Amt
+			         Element Amt = doc.createElement("Amt");
+			         CdtTrfTxInf.appendChild(Amt);
+			         
+			         // +++ InstdAmt Ccy="EUR"
+			         Element InstdAmt = doc.createElement("InstdAmt");
+			         Attr attr2 = doc.createAttribute("Ccy");
+		             attr2.setValue(auxInfoPago.getCcy());
+		             InstdAmt.setAttributeNode(attr2);
+		             InstdAmt.setTextContent(pagoActual.getInstdAmt2String());
+			         Amt.appendChild(InstdAmt);
+			         
+			         // ++ CdtrAgt
+			         Element CdtrAgt = doc.createElement("CdtrAgt");
+			         CdtTrfTxInf.appendChild(CdtrAgt);
+			         
+			         // +++ FinInstnId
+			         Element FinInstnId_CdtrAgt = doc.createElement("FinInstnId");
+			         CdtrAgt.appendChild(FinInstnId_CdtrAgt);
+			         
+			         // ++++ PstlAdr
+			         Element PstlAdr_FinInstnId = doc.createElement("PstlAdr");
+			         FinInstnId_CdtrAgt.appendChild(PstlAdr_FinInstnId);
+			         
+			         // +++++ Ctry
+			         Element Ctry_PstlAdr = doc.createElement("Ctry");
+			         Ctry_PstlAdr.setTextContent(pagoActual.getCtry_PstlAdr_Cdtr());
+			         PstlAdr_FinInstnId.appendChild(Ctry_PstlAdr);
+			         
+			         // ++ Cdtr
+			         Element Cdtr = doc.createElement("Cdtr");
+			         CdtTrfTxInf.appendChild(Cdtr);
+			         
+			         // +++ Nm
+			         Element Nm_Cdtr = doc.createElement("Cdtr");
+			         Nm_Cdtr.setTextContent(pagoActual.getNm_Cdtr());
+			         Cdtr.appendChild(Nm_Cdtr);
+			         
+			         // +++ PstlAdr
+			         Element PstlAdr_Cdtr = doc.createElement("PstlAdr");
+			         Cdtr.appendChild(PstlAdr_Cdtr);
+			         
+			         // ++++ Ctry
+			         Element Ctry_PstlAdr_Cdtr = doc.createElement("Ctry");
+			         Ctry_PstlAdr_Cdtr.setTextContent(pagoActual.getCtry_PstlAdr_Cdtr());
+			         PstlAdr_Cdtr.appendChild(Ctry_PstlAdr_Cdtr);
+			         
+			         // ++++ AdrLine1
+			         Element AdrLine1 = doc.createElement("AdrLine");
+			         AdrLine1.setTextContent(pagoActual.getAdrLine_PstlAdr());
+			         PstlAdr_Cdtr.appendChild(AdrLine1);
+			         
+			         // ++++ AdrLine2
+			         Element AdrLine2_Cdtr = doc.createElement("AdrLine");
+			         AdrLine2_Cdtr.setTextContent(pagoActual.getAdrLine2_PstlAdr());
+			         PstlAdr_Cdtr.appendChild(AdrLine2_Cdtr);
+			         
+			         // ++ CdtrAcct
+			         Element CdtrAcct = doc.createElement("CdtrAcct");
+			         CdtTrfTxInf.appendChild(CdtrAcct);
+			         
+			         // +++ Id
+			         Element Id_CdtrAcct = doc.createElement("Id");
+			         CdtrAcct.appendChild(Id_CdtrAcct);
+			         
+			         // ++++ IBAN
+			         Element IBAN_Id_CdtrAcct = doc.createElement("Id");
+			         IBAN_Id_CdtrAcct.setTextContent(pagoActual.getIBAN());
+			         Id_CdtrAcct.appendChild(IBAN_Id_CdtrAcct);
+			         
+			         // ++ Purp
+			         Element Purp = doc.createElement("Purp");
+			         CdtTrfTxInf.appendChild(Purp);
+			         
+			         // +++ Cd
+			         Element Cd_Purp = doc.createElement("Cd");
+			         Cd_Purp.setTextContent(pagoActual.getCd_Purp());
+			         Purp.appendChild(Cd_Purp);
+			         
+			         
+			         
 		          }	  
 	          }
 
