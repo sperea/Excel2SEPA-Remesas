@@ -77,6 +77,7 @@ public class TransferPaymentItem {
 	public void setAdrLine2_PstlAdr(String adrLine2_PstlAdr) {
 		AdrLine2_PstlAdr = adrLine2_PstlAdr;
 	}
+	
 	public String getIBAN() {
 		return IBAN;
 	}

@@ -99,7 +99,7 @@ public class TestGroupHeader {
 		this.tp.setAdrLine("SAGASTA, 32, 5º DERECHA");
 		this.tp.setAdrLine2("28004 MADRID");
 		this.tp.setId_Dbtr("A79261020002");
-		this.tp.setIBAN("ES0400750322880600466676");
+		this.tp.setIBAN("ES0400750322880000000000");
 		this.tp.setCcy("EUR");
 		this.tp.setBIC("POPUESMMXXX");
 		this.tp.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
@@ -112,6 +112,13 @@ public class TestGroupHeader {
 		pagoItem.setCd_SvcLvl("SEPA");
 		pagoItem.setInstdAmt(265.33);
 		pagoItem.setCtry_PstlAdr_Cdtr("ES");
+		pagoItem.setAdrLine_PstlAdr(".");
+		pagoItem.setAdrLine2_PstlAdr(".");
+		pagoItem.setIBAN("ES3400491500022900000000");
+		pagoItem.setCd_Purp("OTHR");
+		pagoItem.setUstrd("LIQUIDACION 05/16");
+
+		this.tp.InsertarPago(pagoItem);
 		
 		auxXML.InsertarPago(this.tp);
 		

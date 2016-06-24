@@ -403,8 +403,14 @@ public class XmlSEPATransfersFile {
 			         Cd_Purp.setTextContent(pagoActual.getCd_Purp());
 			         Purp.appendChild(Cd_Purp);
 			         
+			         // +++ RmtInf
+			         Element RmtInf = doc.createElement("RmtInf");
+			         CdtTrfTxInf.appendChild(RmtInf);
 			         
-			         
+			         // ++++ Ustrd
+			         Element Ustrd = doc.createElement("Ustrd");
+			         Ustrd.setTextContent(pagoActual.getUstrd());
+			         RmtInf.appendChild(Ustrd);
 		          }	  
 	          }
 
