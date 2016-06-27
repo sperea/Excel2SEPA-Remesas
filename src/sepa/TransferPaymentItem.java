@@ -1,6 +1,7 @@
 package sepa;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -43,10 +44,10 @@ public class TransferPaymentItem {
 	}
 	public String getInstdAmt2String() {
 		
-		NumberFormat nf = NumberFormat.getNumberInstance(new Locale("en_US"));
-		DecimalFormat df = (DecimalFormat)nf;
-		String InstdAmtStr = df.format(this.InstdAmt);
-		return InstdAmtStr;
+		DecimalFormatSymbols simbolos = DecimalFormatSymbols.getInstance(Locale.ENGLISH);
+		DecimalFormat formateador = new DecimalFormat("####.##",simbolos);
+		// String InstdAmtStr = df.format(this.InstdAmt);
+		return formateador.format(this.InstdAmt);
 	}
 	public void setInstdAmt(double instdAmt) {
 		InstdAmt = instdAmt;

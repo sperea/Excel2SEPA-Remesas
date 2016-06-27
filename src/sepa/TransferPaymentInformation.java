@@ -1,7 +1,12 @@
 package sepa;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Locale;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -237,13 +242,14 @@ public class TransferPaymentInformation {
 	 * @return the nbOfTxs
 	 */
 	public String getNbOfTxs() {
-		return NbOfTxs;
+		//return NbOfTxs
+      return Integer.toString(this.getPagos().size());
 	}
 
 
 
 	/**
-	 * @param nbOfTxs the nbOfTxs to set
+	 * @param nbOfTxs the nbOfTxs to set   NbOfTxs
 	 */
 	public void setNbOfTxs(String nbOfTxs) {
 		NbOfTxs = nbOfTxs;
@@ -255,7 +261,20 @@ public class TransferPaymentInformation {
 	 * @return the ctrlSum
 	 */
 	public String getCtrlSum() {
-		return CtrlSum;
+        ArrayList<TransferPaymentItem> pagos = this.getPagos();
+        Iterator<TransferPaymentItem> iteradorPagos = pagos.iterator();
+        double sumaImportes = 0.0;
+        while(iteradorPagos.hasNext())
+        {
+        	TransferPaymentItem pagoActual = iteradorPagos.next();
+        	sumaImportes += pagoActual.getInstdAmt();
+        }
+        
+		DecimalFormatSymbols simbolos = DecimalFormatSymbols.getInstance(Locale.ENGLISH);
+		DecimalFormat formateador = new DecimalFormat("####.##",simbolos);
+		// String InstdAmtStr = df.format(this.InstdAmt);
+		return formateador.format(sumaImportes);
+
 	}
 
 
