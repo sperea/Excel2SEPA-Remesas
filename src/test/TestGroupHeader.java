@@ -2,13 +2,29 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.xml.XMLConstants;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
 import sepa.GroupHeader;
 import sepa.TransferPaymentInformation;
 import sepa.TransferPaymentItem;
@@ -44,7 +60,7 @@ public class TestGroupHeader {
 	public void testCreDtTm_Cadena() {
 	    // <CreDtTm>2016-05-25T12:55:58</CreDtTm>
 	    this.gh.setCreDtTm("2016-05-25T12:55:58");
-	    assertTrue("2016-05-25T12:55:58".compareTo(gh.getCreDtTm())==0);
+	    assertTrue("2016-05-25T12:55:58".compareTo(gh.getCreDtTmStr())==0);
 	}
 	
 	@Test
@@ -55,7 +71,7 @@ public class TestGroupHeader {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		Date d1 = df.parse(strFecha);
 		this.gh.setCreDtTm(d1);
-	    assertTrue(strFecha.compareTo(gh.getCreDtTm())==0);
+	    assertTrue(strFecha.compareTo(gh.getCreDtTmStr())==0);
 	    
 	}
 	
@@ -132,6 +148,73 @@ public class TestGroupHeader {
 
 	}
 	
+	@Test
+	public void TestFileFormatXSD ()
+	{
+		
+		/* se comprueba que el fichero generado en la prueba anterior es correcto según el esquema definido en el XSD */
+	       try {
+	           //XML a validar
+	           Source xmlFile = new StreamSource(new File("/home/sergio/Documentos/fichero.xml"));
+	          
+	           //Esquema con el que comparar
+	           Source schemaFile = new StreamSource(new File("xsd/transferencias.xsd"));
+
+	           //Preparación del esquema
+	           SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+	           Schema schema = schemaFactory.newSchema(schemaFile);
+	           
+	           //Creación del validador
+	           Validator validator = schema.newValidator();
+
+	           //Definición del manejador de excepciones del validador
+	           final List exceptions = new LinkedList();
+	           validator.setErrorHandler(new ErrorHandler()
+	            {
+	            @Override
+	            public void warning(SAXParseException exception) throws SAXException
+	            {
+	             exceptions.add(exception);
+	            }
+
+	            @Override
+	            public void fatalError(SAXParseException exception) throws SAXException
+	            {
+	             exceptions.add(exception);
+	            }
+
+	            @Override
+	            public void error(SAXParseException exception) throws SAXException
+	            {
+	             exceptions.add(exception);
+	            }
+	            });
+
+	           //Validación del XML
+	           validator.validate(xmlFile);
+	           
+	           //Resultado de la validación. Si hay errores se detalla el error y la posición exacta en el XML
+	           if (exceptions.size()==0) {
+	            System.out.println("FILE " + xmlFile.getSystemId() + " IS VALID");
+	           } else {
+	            System.out.println("FILE " + xmlFile.getSystemId() + " IS INVALID");
+	            System.out.println("NUMBER OF ERRORS: "+exceptions.size());
+	                for(int i = 0; i < exceptions.size(); i++) {
+	                 i=i+1;
+	                 System.out.println("Error # " + i + ":");
+	                 i=i-1;
+	                 System.out.println("    - Line: "+((SAXParseException) exceptions.get(i)).getLineNumber());
+	                 System.out.println("    - Column: "+((SAXParseException) exceptions.get(i)).getColumnNumber());
+	                 System.out.println("    - Error message: "+((Throwable) exceptions.get(i)).getLocalizedMessage());
+	                 System.out.println("------------------------------");
+	                           }
+	                   }
+	            } catch (SAXException e) {
+	             e.printStackTrace();
+	            } catch (IOException e) {
+	            e.printStackTrace();
+	           }
+	}
 
 
 	

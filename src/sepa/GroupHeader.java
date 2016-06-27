@@ -56,16 +56,16 @@ public class GroupHeader {
 	}
 	
 	
-	public Date getCreDtTmStr() {
-		return creDtTm;
+	public String getCreDtTmStr() {
+		DateFormat df = new SimpleDateFormat(FORMATO_FECHA);
+		String txtcreDtTm = df.format(creDtTm);
+		return txtcreDtTm;
 	}
 	public void setCreDtTm(Date creDtTm) {
 		this.creDtTm = creDtTm;
 	}
-	public String getCreDtTm() {
-		DateFormat df = new SimpleDateFormat(FORMATO_FECHA);
-		String txtcreDtTm = df.format(creDtTm);
-		return txtcreDtTm;
+	public Date getCreDtTm() {
+		return creDtTm;
 	}
 	public void setCreDtTm(String creDtTm) {
 		

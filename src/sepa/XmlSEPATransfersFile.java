@@ -86,6 +86,10 @@ public class XmlSEPATransfersFile {
 	          MsgId.setTextContent(this.groupHeader.getMsgId());
 	          GrpHdr.appendChild(MsgId);
 	          
+	          Element CreDtTm = doc.createElement("CreDtTm");
+	          CreDtTm.setTextContent(this.groupHeader.getCreDtTmStr());
+	          GrpHdr.appendChild(CreDtTm);
+	          
 	          Element NbOfTxs_header = doc.createElement("NbOfTxs");
 	          NbOfTxs_header.setTextContent(this.groupHeader.getNbOfTxs());
 	          GrpHdr.appendChild(NbOfTxs_header);
@@ -114,9 +118,9 @@ public class XmlSEPATransfersFile {
 	          Element Othr_header = doc.createElement("Othr");
 	          OrgId_header.appendChild(Othr_header);
 	          
-	          Element Id_value_header = doc.createElement("Id_value_header");
+	          Element Id_value_header = doc.createElement("Id");
 	          Id_value_header.setTextContent(this.groupHeader.getId());
-	          Othr_header.appendChild(CtrlSum_header);
+	          Othr_header.appendChild(Id_value_header);
 	          
 	          /*******************************************
 	           *  INFORMACION DEL PAGO
@@ -169,7 +173,7 @@ public class XmlSEPATransfersFile {
 		         PmtTpInf.appendChild(SvcLvl);
 		         
 		         // ++ CD
-		         Element CD = doc.createElement("CD");
+		         Element CD = doc.createElement("Cd");
 		         CD.setTextContent(auxInfoPago.getCd());
 		         SvcLvl.appendChild(CD);
 		         
@@ -178,7 +182,7 @@ public class XmlSEPATransfersFile {
 		         PmtTpInf.appendChild(LclInstrm);
 		         
 		         // ++ CD
-		         Element Cd_LclInstrm = doc.createElement("CD");
+		         Element Cd_LclInstrm = doc.createElement("Cd");
 		         Cd_LclInstrm.setTextContent(auxInfoPago.getCd_LclInstrm());
 		         LclInstrm.appendChild(Cd_LclInstrm);
 		         
@@ -187,7 +191,7 @@ public class XmlSEPATransfersFile {
 		         PmtTpInf.appendChild(CtgyPurp);
 		         
 		         // ++ CD
-		         Element Cd_CtgyPurp = doc.createElement("CD");
+		         Element Cd_CtgyPurp = doc.createElement("Cd");
 		         Cd_CtgyPurp.setTextContent(auxInfoPago.getCd_CtgyPurp());
 		         CtgyPurp.appendChild(Cd_CtgyPurp);
 		         
@@ -218,7 +222,7 @@ public class XmlSEPATransfersFile {
 		         Element AdrLine = doc.createElement("AdrLine");
 		         AdrLine.setTextContent(auxInfoPago.getAdrLine());
 		         PstlAdr.appendChild(AdrLine); 
-		         Element AdrLine2 = doc.createElement("AdrLine2");
+		         Element AdrLine2 = doc.createElement("AdrLine");
 		         AdrLine2.setTextContent(auxInfoPago.getAdrLine2());
 		         PstlAdr.appendChild(AdrLine2); 
 		         
@@ -249,12 +253,9 @@ public class XmlSEPATransfersFile {
 		         
 		         // +++ Id_Iban
 		         Element Id_Iban = doc.createElement("IBAN");
+		         Id_Iban.setTextContent(auxInfoPago.getIBAN());
 		         Id_DbtrAcct.appendChild(Id_Iban);
 		         
-		         // ++ IBAN
-		         Element Iban = doc.createElement("IBAN");
-		         Iban.setTextContent(auxInfoPago.getIBAN());
-		         Id_Iban.appendChild(Iban);
 		         
 		         // ++ CCY
 		         Element ccy = doc.createElement("Ccy");
