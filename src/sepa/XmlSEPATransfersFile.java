@@ -290,7 +290,7 @@ public class XmlSEPATransfersFile {
 		          
 		          ArrayList<TransferPaymentItem> pagos = auxInfoPago.getPagos();
 		          Iterator<TransferPaymentItem> iteradorPagos = pagos.iterator();
-		          while(it.hasNext())
+		          while(iteradorPagos.hasNext())
 		          {
 		        	  TransferPaymentItem pagoActual = iteradorPagos.next();
 		        	  
@@ -359,7 +359,7 @@ public class XmlSEPATransfersFile {
 			         CdtTrfTxInf.appendChild(Cdtr);
 			         
 			         // +++ Nm
-			         Element Nm_Cdtr = doc.createElement("Cdtr");
+			         Element Nm_Cdtr = doc.createElement("Nm");
 			         Nm_Cdtr.setTextContent(pagoActual.getNm_Cdtr());
 			         Cdtr.appendChild(Nm_Cdtr);
 			         
@@ -391,7 +391,7 @@ public class XmlSEPATransfersFile {
 			         CdtrAcct.appendChild(Id_CdtrAcct);
 			         
 			         // ++++ IBAN
-			         Element IBAN_Id_CdtrAcct = doc.createElement("Id");
+			         Element IBAN_Id_CdtrAcct = doc.createElement("IBAN");
 			         IBAN_Id_CdtrAcct.setTextContent(pagoActual.getIBAN());
 			         Id_CdtrAcct.appendChild(IBAN_Id_CdtrAcct);
 			         

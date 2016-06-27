@@ -1,6 +1,8 @@
 package sepa;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class TransferPaymentItem {
 	
@@ -40,7 +42,9 @@ public class TransferPaymentItem {
 		return InstdAmt;
 	}
 	public String getInstdAmt2String() {
-		DecimalFormat df = new DecimalFormat("#.00");
+		
+		NumberFormat nf = NumberFormat.getNumberInstance(new Locale("en_US"));
+		DecimalFormat df = (DecimalFormat)nf;
 		String InstdAmtStr = df.format(this.InstdAmt);
 		return InstdAmtStr;
 	}

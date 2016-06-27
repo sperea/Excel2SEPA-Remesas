@@ -30,7 +30,7 @@ import sepa.TransferPaymentInformation;
 import sepa.TransferPaymentItem;
 import sepa.XmlSEPATransfersFile;
 
-public class TestGroupHeader {
+public class TestXML {
 
 	private GroupHeader gh;
 	private TransferPaymentInformation tp;
@@ -126,7 +126,8 @@ public class TestGroupHeader {
 		pagoItem.setInstrId("INSTRID-02-01");
 		pagoItem.setEndToEndId("ENDTOEND-02");
 		pagoItem.setCd_SvcLvl("SEPA");
-		pagoItem.setInstdAmt(265.33);
+		pagoItem.setNm_Cdtr("WR BERKLEY EUROPE AG SUCURSAL EN ESPANA");
+		pagoItem.setInstdAmt(26000.33);
 		pagoItem.setCtry_PstlAdr_Cdtr("ES");
 		pagoItem.setAdrLine_PstlAdr(".");
 		pagoItem.setAdrLine2_PstlAdr(".");
@@ -193,9 +194,12 @@ public class TestGroupHeader {
 	           //Validación del XML
 	           validator.validate(xmlFile);
 	           
+	           boolean validFile = false;
+	           
 	           //Resultado de la validación. Si hay errores se detalla el error y la posición exacta en el XML
 	           if (exceptions.size()==0) {
 	            System.out.println("FILE " + xmlFile.getSystemId() + " IS VALID");
+	            validFile = true;
 	           } else {
 	            System.out.println("FILE " + xmlFile.getSystemId() + " IS INVALID");
 	            System.out.println("NUMBER OF ERRORS: "+exceptions.size());
@@ -209,6 +213,8 @@ public class TestGroupHeader {
 	                 System.out.println("------------------------------");
 	                           }
 	                   }
+	           assertTrue(validFile);
+	           
 	            } catch (SAXException e) {
 	             e.printStackTrace();
 	            } catch (IOException e) {
