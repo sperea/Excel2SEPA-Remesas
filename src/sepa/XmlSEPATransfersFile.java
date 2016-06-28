@@ -59,7 +59,7 @@ public class XmlSEPATransfersFile {
 		
 		/* datos generales y agregados */
 		
-		pagoInfo.setPmtInfId("LOTE-00000065"); 
+		pagoInfo.setPmtInfId("LOTE-".concat(objetoSepaJla.getIdOperacion())); 
 		pagoInfo.setPmtMtd("TRF");
 		pagoInfo.setBtchBookg("false");
 		pagoInfo.setInstrPrty("HIGH");
@@ -67,32 +67,40 @@ public class XmlSEPATransfersFile {
 		pagoInfo.setCd_LclInstrm("TRF");
 		pagoInfo.setCd_CtgyPurp("SUPP");
 		pagoInfo.setReqdExctnDt("2016-05-25");
-		pagoInfo.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
+		pagoInfo.setNm(objetoSepaJla.getrSocialEmisor());
 		pagoInfo.setCtry("ES");
-		pagoInfo.setAdrLine("SAGASTA, 32, 5º DERECHA");
-		pagoInfo.setAdrLine2("28004 MADRID");
-		pagoInfo.setId_Dbtr("A79261020002");
-		pagoInfo.setIBAN("ES0400750322880000000000");
+		pagoInfo.setAdrLine(objetoSepaJla.getAddress1());
+		pagoInfo.setAdrLine2(objetoSepaJla.getAddress2());
+		pagoInfo.setId_Dbtr(objetoSepaJla.getIdFiscalEmisor());
+		pagoInfo.setIBAN(objetoSepaJla.getIbanEmisor());
 		pagoInfo.setCcy("EUR");
-		pagoInfo.setBIC("POPUESMMXXX");
+		pagoInfo.setBIC(objetoSepaJla.getBicEmisor());
 		//this.tp.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
 		
 		/* generamos un pago y lo insertamos */
 		
-		TransferPaymentItem pagoItem = new TransferPaymentItem();
-		pagoItem.setInstrId("INSTRID-02-01");
-		pagoItem.setEndToEndId("ENDTOEND-02");
-		pagoItem.setCd_SvcLvl("SEPA");
-		pagoItem.setNm_Cdtr("WR BERKLEY EUROPE AG SUCURSAL EN ESPANA");
-		pagoItem.setInstdAmt(26000.33);
-		pagoItem.setCtry_PstlAdr_Cdtr("ES");
-		pagoItem.setAdrLine_PstlAdr(".");
-		pagoItem.setAdrLine2_PstlAdr(".");
-		pagoItem.setIBAN("ES3400491500022900000000");
-		pagoItem.setCd_Purp("OTHR");
-		pagoItem.setUstrd("LIQUIDACION 05/16");
+		Iterator<JlaTransferenciaSepa> it = objetoSepaJla.getTransferencias().iterator();
+        
+        while (it.hasNext()) {
+        	
+    		TransferPaymentItem pagoItem = new TransferPaymentItem();
+    		JlaTransferenciaSepa objetoPagoJla = it.next();
+    		pagoItem.setInstrId("INSTRID-02-01");
+    		pagoItem.setEndToEndId("ENDTOEND-02");
+    		pagoItem.setCd_SvcLvl("SEPA");
+    		pagoItem.setNm_Cdtr(objetoPagoJla.getBeneficiario());
+    		pagoItem.setInstdAmt(objetoPagoJla.getImporte());
+    		pagoItem.setCtry_PstlAdr_Cdtr("ES");
+    		pagoItem.setAdrLine_PstlAdr(objetoPagoJla.getAddress1());
+    		pagoItem.setAdrLine2_PstlAdr(objetoPagoJla.getAddress2());
+    		pagoItem.setIBAN(objetoPagoJla.getIban());
+    		pagoItem.setCd_Purp("OTHR");
+    		pagoItem.setUstrd(objetoPagoJla.getConcepto());    
+    		pagoInfo.InsertarPago(pagoItem);
+        }
 		
-		pagoInfo.InsertarPago(pagoItem);
+		
+		
 		this.infopagos.add(pagoInfo);
 		
 	}
