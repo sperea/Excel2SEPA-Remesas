@@ -213,6 +213,7 @@ public class TestXML {
 	                 System.out.println("------------------------------");
 	                           }
 	                   }
+	           
 	           assertTrue(validFile);
 	           
 	            } catch (SAXException e) {

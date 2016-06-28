@@ -252,6 +252,7 @@ public class TransferPaymentInformation {
 	 * @param nbOfTxs the nbOfTxs to set   NbOfTxs
 	 */
 	public void setNbOfTxs(String nbOfTxs) {
+		
 		NbOfTxs = nbOfTxs;
 	}
 

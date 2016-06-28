@@ -91,11 +91,11 @@ public class XmlSEPATransfersFile {
 	          GrpHdr.appendChild(CreDtTm);
 	          
 	          Element NbOfTxs_header = doc.createElement("NbOfTxs");
-	          NbOfTxs_header.setTextContent(this.groupHeader.getNbOfTxs());
+	          NbOfTxs_header.setTextContent(this.payment.getNbOfTxs()); /* premisa : sólo un TransferPaymentInformation */
 	          GrpHdr.appendChild(NbOfTxs_header);
 	          
 	          Element CtrlSum_header = doc.createElement("CtrlSum");
-	          CtrlSum_header.setTextContent(this.groupHeader.getCtrlSum());
+	          CtrlSum_header.setTextContent(this.payment.getCtrlSum()); /* premisa : sólo un TransferPaymentInformation */
 	          GrpHdr.appendChild(CtrlSum_header);
 	          
 	          // InitgPty
@@ -132,6 +132,7 @@ public class XmlSEPATransfersFile {
 	        	 TransferPaymentInformation auxInfoPago = it.next();
 	        	 
 	        	 Element PmtInf = doc.createElement("PmtInf");
+	        	 
 		         CstmrCdtTrfInitn.appendChild(PmtInf);
 		         
 		         // PmtInfId
