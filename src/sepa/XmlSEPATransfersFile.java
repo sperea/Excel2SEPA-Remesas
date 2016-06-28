@@ -47,7 +47,7 @@ public class XmlSEPATransfersFile {
 	
 	public XmlSEPATransfersFile(JlaInfoSepa objetoSepaJla) {
 		super();
-		
+		this.groupHeader = new GroupHeader();
 	    this.groupHeader.setCreDtTm("2016-05-25T12:55:58");
 		this.groupHeader.setMsgId(objetoSepaJla.getIdOperacion());
 		this.groupHeader.setNm(objetoSepaJla.getrSocialEmisor());

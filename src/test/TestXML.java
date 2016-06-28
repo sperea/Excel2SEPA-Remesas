@@ -229,8 +229,77 @@ public class TestXML {
 		ExcelSepa  excel = new ExcelSepa();
 		excel.setRutaExcel("template/template.xls");
 		JlaInfoSepa datosEntrada = excel.LeerTransacciones();
-		
-		assertTrue(0==0);
+		XmlSEPATransfersFile xmlSepa = new XmlSEPATransfersFile(datosEntrada); 
+		xmlSepa.GenerateXML("excelXml.xml");
+
+		/* se comprueba que el fichero generado en la prueba anterior es correcto según el esquema definido en el XSD */
+	       try {
+	           //XML a validar
+	           Source xmlFile = new StreamSource(new File("excelXml.xml"));
+	          
+	           //Esquema con el que comparar
+	           Source schemaFile = new StreamSource(new File("xsd/transferencias.xsd"));
+
+	           //Preparación del esquema
+	           SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+	           Schema schema = schemaFactory.newSchema(schemaFile);
+	           
+	           //Creación del validador
+	           Validator validator = schema.newValidator();
+
+	           //Definición del manejador de excepciones del validador
+	           final List exceptions = new LinkedList();
+	           validator.setErrorHandler(new ErrorHandler()
+	            {
+	            @Override
+	            public void warning(SAXParseException exception) throws SAXException
+	            {
+	             exceptions.add(exception);
+	            }
+
+	            @Override
+	            public void fatalError(SAXParseException exception) throws SAXException
+	            {
+	             exceptions.add(exception);
+	            }
+
+	            @Override
+	            public void error(SAXParseException exception) throws SAXException
+	            {
+	             exceptions.add(exception);
+	            }
+	            });
+
+	           //Validación del XML
+	           validator.validate(xmlFile);
+	           
+	           boolean validFile = false;
+	           
+	           //Resultado de la validación. Si hay errores se detalla el error y la posición exacta en el XML
+	           if (exceptions.size()==0) {
+	            System.out.println("FILE " + xmlFile.getSystemId() + " IS VALID");
+	            validFile = true;
+	           } else {
+	            System.out.println("FILE " + xmlFile.getSystemId() + " IS INVALID");
+	            System.out.println("NUMBER OF ERRORS: "+exceptions.size());
+	                for(int i = 0; i < exceptions.size(); i++) {
+	                 i=i+1;
+	                 System.out.println("Error # " + i + ":");
+	                 i=i-1;
+	                 System.out.println("    - Line: "+((SAXParseException) exceptions.get(i)).getLineNumber());
+	                 System.out.println("    - Column: "+((SAXParseException) exceptions.get(i)).getColumnNumber());
+	                 System.out.println("    - Error message: "+((Throwable) exceptions.get(i)).getLocalizedMessage());
+	                 System.out.println("------------------------------");
+	                           }
+	                   }
+	           
+	           assertTrue(validFile);
+	           
+	            } catch (SAXException e) {
+	             e.printStackTrace();
+	            } catch (IOException e) {
+	            e.printStackTrace();
+	           }
 	}
 
 
