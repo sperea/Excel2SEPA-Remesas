@@ -14,6 +14,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
+import sepa.JlaInfoSepa;
+import sepa.JlaTransferenciaSepa;
+
 public class ExcelSepa {
 	
 		private String RutaExcel;
@@ -26,8 +29,10 @@ public class ExcelSepa {
 			RutaExcel = rutaExcel;
 		}
 		
-		public void LeerTransacciones() throws IOException
+		public JlaInfoSepa LeerTransacciones() throws IOException
 		{
+			
+			
 			FileInputStream file = null;
 			try {
 				file = new FileInputStream(new File(this.getRutaExcel()));
@@ -46,29 +51,89 @@ public class ExcelSepa {
 			HSSFSheet sheetGeneral = workbook.getSheetAt(0); /* GENERAL */
 			
 			
-			HSSFCell cellFechaComienzo = sheetGeneral.getRow(10).getCell(4);
+			HSSFCell cellFechaComienzo = sheetGeneral.getRow(9).getCell(3);
 			Date fechaComienzo = cellFechaComienzo.getDateCellValue();
 			
-			HSSFCell cellCodigoInterno = sheetGeneral.getRow(11).getCell(4);
+			HSSFCell cellCodigoInterno = sheetGeneral.getRow(10).getCell(3);
 			String codigoInterno = cellCodigoInterno.getStringCellValue();
 			
-			HSSFCell cellIdFiscal = sheetGeneral.getRow(12).getCell(4);
+			HSSFCell cellRSocialEmisor = sheetGeneral.getRow(11).getCell(3);
+			String rSocialEmisor = cellRSocialEmisor.getStringCellValue();
+			
+			HSSFCell cellIdFiscal = sheetGeneral.getRow(12).getCell(3);
 			String idFiscal = cellIdFiscal.getStringCellValue();
 			
-			HSSFSheet sheetTransferencias = workbook.getSheetAt(1); /* TRANSFERENCIAS */
+			HSSFCell cellAddr1 = sheetGeneral.getRow(13).getCell(3);
+			String addr1 = cellAddr1.getStringCellValue();
 			
+			HSSFCell cellAddr2 = sheetGeneral.getRow(14).getCell(3);
+			String addr2 = cellAddr2.getStringCellValue();
+			
+			HSSFCell cellIban = sheetGeneral.getRow(15).getCell(3);
+			String iban = cellIban.getStringCellValue();
+			
+			HSSFCell cellBic = sheetGeneral.getRow(16).getCell(3);
+			String bic = cellBic.getStringCellValue();
+			
+			JlaInfoSepa infoSepa = new JlaInfoSepa();
+	//		infoSepa.setFechaOperacion(fechaComienzo);
+			infoSepa.setIdOperacion(codigoInterno);
+			infoSepa.setrSocialEmisor(rSocialEmisor);
+			infoSepa.setIdFiscalEmisor(idFiscal);
+			infoSepa.setAddress1(addr1);
+			infoSepa.setAddress2(addr2);
+			infoSepa.setIbanEmisor(iban);
+			infoSepa.setBicEmisor(bic); 
+			
+			//System.out.println("Codigo Interno: ".concat(codigoInterno));
+			//System.out.println("Id Fiscal: ".concat(idFiscal));
+			//System.out.println("Bic: ".concat(bic));
+
+			
+			HSSFSheet sheetTransferencias = workbook.getSheetAt(1); /* TRANSFERENCIAS */
 			boolean fin = false;
 			Iterator<Row> rowIterator = sheetTransferencias.iterator();
-			Row row;
+			Row filaTransferencias;
+			int numFila = 0;
 			// Recorremos todas las filas para mostrar el contenido de cada celda
 			while ((rowIterator.hasNext()) && (!fin)){
-
-				
-				
+					JlaTransferenciaSepa transferenciaSepa = new JlaTransferenciaSepa();
+					
+					filaTransferencias = rowIterator.next();
+					numFila++;
+					
+					if (numFila > 1)
+					{
+						if (filaTransferencias.getCell(0).getCellType() == HSSFCell.CELL_TYPE_BLANK)
+							// ya no hay más filas
+								fin = true;
+						else
+						{
+								//System.out.println(filaTransferencias.getCell(0).getStringCellValue());
+								//System.out.println(filaTransferencias.getCell(1).getStringCellValue());
+								//System.out.println(filaTransferencias.getCell(2).getStringCellValue());
+								//System.out.println(filaTransferencias.getCell(3).getStringCellValue());
+								//System.out.println(filaTransferencias.getCell(4).getStringCellValue());
+								//System.out.println(filaTransferencias.getCell(5).getStringCellValue());
+								transferenciaSepa.setBeneficiario(filaTransferencias.getCell(0).getStringCellValue()); 
+								transferenciaSepa.setAddress1(filaTransferencias.getCell(1).getStringCellValue());
+								transferenciaSepa.setAddress2(filaTransferencias.getCell(2).getStringCellValue());
+								transferenciaSepa.setPais(filaTransferencias.getCell(3).getStringCellValue());
+								transferenciaSepa.setIban(filaTransferencias.getCell(4).getStringCellValue());
+								transferenciaSepa.setConcepto(filaTransferencias.getCell(5).getStringCellValue());
+								transferenciaSepa.setImporte(filaTransferencias.getCell(6).getNumericCellValue());
+								
+								infoSepa.InsertarTransferencia(transferenciaSepa);
+						}
+					}
+					
+					
 			}
 			
 			// cerramos el libro excel
 			workbook.close();
+			
+			return infoSepa;
 			
 		}
 

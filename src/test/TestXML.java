@@ -25,7 +25,9 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import excel.ExcelSepa;
 import sepa.GroupHeader;
+import sepa.JlaInfoSepa;
 import sepa.TransferPaymentInformation;
 import sepa.TransferPaymentItem;
 import sepa.XmlSEPATransfersFile;
@@ -219,6 +221,16 @@ public class TestXML {
 	            } catch (IOException e) {
 	            e.printStackTrace();
 	           }
+	}
+	
+	@Test
+	public void TestExcelReader () throws IOException
+	{
+		ExcelSepa  excel = new ExcelSepa();
+		excel.setRutaExcel("template/template.xls");
+		JlaInfoSepa datosEntrada = excel.LeerTransacciones();
+		
+		assertTrue(0==0);
 	}
 
 
