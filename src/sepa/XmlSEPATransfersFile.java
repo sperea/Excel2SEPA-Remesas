@@ -20,6 +20,8 @@ import org.w3c.dom.Element;
 
 public class XmlSEPATransfersFile {
 
+
+
 	/* 
 	 * 
 	 * Clase que encapsula toda la información que contiene el fichero XML de la SEPA a saber
@@ -38,6 +40,63 @@ public class XmlSEPATransfersFile {
 
 	private ArrayList<TransferPaymentInformation> infopagos = new ArrayList<TransferPaymentInformation>();
 	
+	public XmlSEPATransfersFile() {
+		super();
+		
+	}
+	
+	public XmlSEPATransfersFile(JlaInfoSepa objetoSepaJla) {
+		super();
+		
+	    this.groupHeader.setCreDtTm("2016-05-25T12:55:58");
+		this.groupHeader.setMsgId(objetoSepaJla.getIdOperacion());
+		this.groupHeader.setNm(objetoSepaJla.getrSocialEmisor());
+		this.groupHeader.setId(objetoSepaJla.getIdFiscalEmisor());
+		
+		/* generar pagos */
+		
+		TransferPaymentInformation pagoInfo = new TransferPaymentInformation();
+		
+		/* datos generales y agregados */
+		
+		pagoInfo.setPmtInfId("LOTE-00000065"); 
+		pagoInfo.setPmtMtd("TRF");
+		pagoInfo.setBtchBookg("false");
+		pagoInfo.setInstrPrty("HIGH");
+		pagoInfo.setCd("SEPA");
+		pagoInfo.setCd_LclInstrm("TRF");
+		pagoInfo.setCd_CtgyPurp("SUPP");
+		pagoInfo.setReqdExctnDt("2016-05-25");
+		pagoInfo.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
+		pagoInfo.setCtry("ES");
+		pagoInfo.setAdrLine("SAGASTA, 32, 5º DERECHA");
+		pagoInfo.setAdrLine2("28004 MADRID");
+		pagoInfo.setId_Dbtr("A79261020002");
+		pagoInfo.setIBAN("ES0400750322880000000000");
+		pagoInfo.setCcy("EUR");
+		pagoInfo.setBIC("POPUESMMXXX");
+		//this.tp.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
+		
+		/* generamos un pago y lo insertamos */
+		
+		TransferPaymentItem pagoItem = new TransferPaymentItem();
+		pagoItem.setInstrId("INSTRID-02-01");
+		pagoItem.setEndToEndId("ENDTOEND-02");
+		pagoItem.setCd_SvcLvl("SEPA");
+		pagoItem.setNm_Cdtr("WR BERKLEY EUROPE AG SUCURSAL EN ESPANA");
+		pagoItem.setInstdAmt(26000.33);
+		pagoItem.setCtry_PstlAdr_Cdtr("ES");
+		pagoItem.setAdrLine_PstlAdr(".");
+		pagoItem.setAdrLine2_PstlAdr(".");
+		pagoItem.setIBAN("ES3400491500022900000000");
+		pagoItem.setCd_Purp("OTHR");
+		pagoItem.setUstrd("LIQUIDACION 05/16");
+		
+		pagoInfo.InsertarPago(pagoItem);
+		this.infopagos.add(pagoInfo);
+		
+	}
+	
 	public void InsertarPago(TransferPaymentInformation pago)
 	{
 		this.infopagos.add(pago);
@@ -46,6 +105,9 @@ public class XmlSEPATransfersFile {
 	public GroupHeader getGroupHeader() {
 		return groupHeader;
 	}
+	
+	
+	
 
 	public void setGroupHeader(GroupHeader groupHeader) {
 		this.groupHeader = groupHeader;
