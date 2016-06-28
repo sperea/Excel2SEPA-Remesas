@@ -2,7 +2,11 @@ package sepa;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -90,46 +94,35 @@ public class XmlSEPATransfersFile {
 	          CreDtTm.setTextContent(this.groupHeader.getCreDtTmStr());
 	          GrpHdr.appendChild(CreDtTm);
 	          
-	          Element NbOfTxs_header = doc.createElement("NbOfTxs");
-	          NbOfTxs_header.setTextContent(this.payment.getNbOfTxs()); /* premisa : sólo un TransferPaymentInformation */
-	          GrpHdr.appendChild(NbOfTxs_header);
+	          /* El header contnua generándose más adelante */
 	          
-	          Element CtrlSum_header = doc.createElement("CtrlSum");
-	          CtrlSum_header.setTextContent(this.payment.getCtrlSum()); /* premisa : sólo un TransferPaymentInformation */
-	          GrpHdr.appendChild(CtrlSum_header);
-	          
-	          // InitgPty
-	          Element InitgPty = doc.createElement("InitgPty");
-	          GrpHdr.appendChild(InitgPty);
-	          
-	          Element Nm_header = doc.createElement("Nm");
-	          Nm_header.setTextContent(this.groupHeader.getNm());
-	          InitgPty.appendChild(Nm_header);
-	          
-	          // + Id
-	          Element Id_header = doc.createElement("Id");
-	          InitgPty.appendChild(Id_header);
-	          
-	          // ++ OrgId
-	          Element OrgId_header = doc.createElement("OrgId");
-	          Id_header.appendChild(OrgId_header);
-	          
-	          // +++ Othr
-	          Element Othr_header = doc.createElement("Othr");
-	          OrgId_header.appendChild(Othr_header);
-	          
-	          Element Id_value_header = doc.createElement("Id");
-	          Id_value_header.setTextContent(this.groupHeader.getId());
-	          Othr_header.appendChild(Id_value_header);
 	          
 	          /*******************************************
 	           *  INFORMACION DEL PAGO
 	           *******************************************/
 	          
+
+	          /* 
+	           * 
+	           * contadores necesarios para calcular a nivel de encabezado los campos: 
+	           * 
+	           * NbOfTxs
+	           * 
+	           * CtrlSum
+	           * 
+	           * */
+	          
+	          double importeTotal = 0.0;
+	          int numeroTransacciones = 0;
+	          
+	          
 	          Iterator<TransferPaymentInformation> it = infopagos.iterator();
 	          
 	          while (it.hasNext()) {
 	        	 TransferPaymentInformation auxInfoPago = it.next();
+	        	 
+	        	 importeTotal += auxInfoPago.getCtrlSumDouble();
+	        	 numeroTransacciones += auxInfoPago.getNbOfTxsInteger();
 	        	 
 	        	 Element PmtInf = doc.createElement("PmtInf");
 	        	 
@@ -291,9 +284,12 @@ public class XmlSEPATransfersFile {
 		          
 		          ArrayList<TransferPaymentItem> pagos = auxInfoPago.getPagos();
 		          Iterator<TransferPaymentItem> iteradorPagos = pagos.iterator();
+		          
+		          
 		          while(iteradorPagos.hasNext())
 		          {
 		        	  TransferPaymentItem pagoActual = iteradorPagos.next();
+		        	  
 		        	  
 			         // + CdtTrfTxInf
 			         Element CdtTrfTxInf = doc.createElement("CdtTrfTxInf");
@@ -415,6 +411,43 @@ public class XmlSEPATransfersFile {
 			         RmtInf.appendChild(Ustrd);
 		          }	  
 	          }
+	          
+	          /* Resto del HEADER */
+	          
+	  		 DecimalFormatSymbols simbolos = DecimalFormatSymbols.getInstance(Locale.ENGLISH);
+			 DecimalFormat formateador = new DecimalFormat("####.##",simbolos);
+
+	          Element NbOfTxs_header = doc.createElement("NbOfTxs");
+	          NbOfTxs_header.setTextContent(Integer.toString(numeroTransacciones)); 
+	          GrpHdr.appendChild(NbOfTxs_header);
+	          
+	          Element CtrlSum_header = doc.createElement("CtrlSum");
+	          CtrlSum_header.setTextContent(formateador.format(importeTotal)); 
+	          GrpHdr.appendChild(CtrlSum_header);
+	          
+	          // InitgPty
+	          Element InitgPty = doc.createElement("InitgPty");
+	          GrpHdr.appendChild(InitgPty);
+	          
+	          Element Nm_header = doc.createElement("Nm");
+	          Nm_header.setTextContent(this.groupHeader.getNm());
+	          InitgPty.appendChild(Nm_header);
+	          
+	          // + Id
+	          Element Id_header = doc.createElement("Id");
+	          InitgPty.appendChild(Id_header);
+	          
+	          // ++ OrgId
+	          Element OrgId_header = doc.createElement("OrgId");
+	          Id_header.appendChild(OrgId_header);
+	          
+	          // +++ Othr
+	          Element Othr_header = doc.createElement("Othr");
+	          OrgId_header.appendChild(Othr_header);
+	          
+	          Element Id_value_header = doc.createElement("Id");
+	          Id_value_header.setTextContent(this.groupHeader.getId());
+	          Othr_header.appendChild(Id_value_header);
 
    
 	  // *************************************************************************************************************************************

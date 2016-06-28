@@ -179,8 +179,9 @@ public class GroupHeader {
 	
 	
 	public String getCtrlSum() {
-		// return ctrlSum;
+		return ctrlSum;
 	}
+	
 	public void setCtrlSum(String ctrlSum) {
 		this.ctrlSum = ctrlSum;
 	}

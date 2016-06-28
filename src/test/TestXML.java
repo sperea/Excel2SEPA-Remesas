@@ -103,8 +103,6 @@ public class TestXML {
 		this.tp.setPmtInfId("LOTE-00000065"); 
 		this.tp.setPmtMtd("TRF");
 		this.tp.setBtchBookg("false");
-		this.tp.setNbOfTxs("21");
-		this.tp.setCtrlSum("156965.10");
 		this.tp.setInstrPrty("HIGH");
 		this.tp.setCd("SEPA");
 		this.tp.setCd_LclInstrm("TRF");

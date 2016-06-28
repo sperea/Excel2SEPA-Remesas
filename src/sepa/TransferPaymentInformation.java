@@ -6,7 +6,6 @@ import java.util.Locale;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -123,8 +122,6 @@ public class TransferPaymentInformation {
 
 	private String PmtMtd;
 	private String BtchBookg;
-	private String NbOfTxs;
-	private String CtrlSum;
 	private String InstrPrty;
 	private String Cd_SvcLvl;
 	private String Cd_LclInstrm;
@@ -245,16 +242,15 @@ public class TransferPaymentInformation {
 		//return NbOfTxs
       return Integer.toString(this.getPagos().size());
 	}
-
-
-
+	
 	/**
-	 * @param nbOfTxs the nbOfTxs to set   NbOfTxs
+	 * @return the nbOfTxs
 	 */
-	public void setNbOfTxs(String nbOfTxs) {
-		
-		NbOfTxs = nbOfTxs;
+	public int getNbOfTxsInteger() {
+		//return NbOfTxs
+      return this.getPagos().size();
 	}
+
 
 
 
@@ -277,16 +273,20 @@ public class TransferPaymentInformation {
 		return formateador.format(sumaImportes);
 
 	}
+	
+	public Double getCtrlSumDouble() {
+        ArrayList<TransferPaymentItem> pagos = this.getPagos();
+        Iterator<TransferPaymentItem> iteradorPagos = pagos.iterator();
+        double sumaImportes = 0.0;
+        while(iteradorPagos.hasNext())
+        {
+        	TransferPaymentItem pagoActual = iteradorPagos.next();
+        	sumaImportes += pagoActual.getInstdAmt();
+        }
+        
+		return sumaImportes;
 
-
-
-	/**
-	 * @param ctrlSum the ctrlSum to set
-	 */
-	public void setCtrlSum(String ctrlSum) {
-		CtrlSum = ctrlSum;
 	}
-
 
 
 	/**
