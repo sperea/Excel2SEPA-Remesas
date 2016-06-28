@@ -6,7 +6,6 @@ import java.util.Locale;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,12 +20,18 @@ import org.w3c.dom.Element;
 
 public class XmlSEPATransfersFile {
 
-	
+	/* 
+	 * 
+	 * Clase que encapsula toda la información que contiene el fichero XML de la SEPA a saber
+	 * 
+	 * 1 Header -> GroupHeader groupHeader
+	 * 1...N Payment Information -> ArrayList<TransferPaymentInformation> infopagos
+	 * 1...N | 1...M Payments -> Lista de pagos dentro de  infopagos
+	 * 
+	 */
 
 	private GroupHeader groupHeader;
-	
-	private TransferPaymentInformation payment;
-	
+
 	
 	/* información del pago 1..N */
 	
@@ -46,14 +51,6 @@ public class XmlSEPATransfersFile {
 		this.groupHeader = groupHeader;
 	}
 
-	public TransferPaymentInformation getPayment() {
-		return payment;
-	}
-
-	public void setPayment(TransferPaymentInformation payment) {
-		this.payment = payment;
-	}
-	
 	public void GenerateXML(String filePath)
 	{
 	      try {

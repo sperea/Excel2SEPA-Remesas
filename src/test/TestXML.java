@@ -116,7 +116,7 @@ public class TestXML {
 		this.tp.setIBAN("ES0400750322880000000000");
 		this.tp.setCcy("EUR");
 		this.tp.setBIC("POPUESMMXXX");
-		this.tp.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
+		//this.tp.setNm("JLA ASOCIADOS CORREDURIA DE SEGUROS");
 		
 		/* generamos un pago y lo insertamos */
 		

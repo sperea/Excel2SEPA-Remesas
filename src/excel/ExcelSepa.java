@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Iterator;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -21,6 +24,52 @@ public class ExcelSepa {
 
 		public void setRutaExcel(String rutaExcel) {
 			RutaExcel = rutaExcel;
+		}
+		
+		public void LeerTransacciones() throws IOException
+		{
+			FileInputStream file = null;
+			try {
+				file = new FileInputStream(new File(this.getRutaExcel()));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Parece que hay un error al abrir el fichero Excel de la siguiente ruta: " . concat(this.getRutaExcel()));
+				e.printStackTrace();
+			}
+			// Crear el objeto que tendra el libro de Excel
+			HSSFWorkbook workbook = new HSSFWorkbook(file);
+			/*
+			 * Obtenemos la primera pestaña a la que se quiera procesar indicando el indice. La primera pestaña contiene los datos generales del pago
+			 * Una vez obtenida la hoja excel con las filas que se quieren leer obtenemos el iterator
+			 * que nos permite recorrer cada una de las filas que contiene.
+			 */
+			HSSFSheet sheetGeneral = workbook.getSheetAt(0); /* GENERAL */
+			
+			
+			HSSFCell cellFechaComienzo = sheetGeneral.getRow(10).getCell(4);
+			Date fechaComienzo = cellFechaComienzo.getDateCellValue();
+			
+			HSSFCell cellCodigoInterno = sheetGeneral.getRow(11).getCell(4);
+			String codigoInterno = cellCodigoInterno.getStringCellValue();
+			
+			HSSFCell cellIdFiscal = sheetGeneral.getRow(12).getCell(4);
+			String idFiscal = cellIdFiscal.getStringCellValue();
+			
+			HSSFSheet sheetTransferencias = workbook.getSheetAt(1); /* TRANSFERENCIAS */
+			
+			boolean fin = false;
+			Iterator<Row> rowIterator = sheetTransferencias.iterator();
+			Row row;
+			// Recorremos todas las filas para mostrar el contenido de cada celda
+			while ((rowIterator.hasNext()) && (!fin)){
+
+				
+				
+			}
+			
+			// cerramos el libro excel
+			workbook.close();
+			
 		}
 
 		public void LeerExcel () throws IOException
