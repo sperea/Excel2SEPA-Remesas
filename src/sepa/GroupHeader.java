@@ -144,8 +144,9 @@ public class GroupHeader {
 	
 	
 	public String getCreDtTmStr() {
+		java.util.Date fechaActual = new Date();
 		DateFormat df = new SimpleDateFormat(FORMATO_FECHA);
-		String txtcreDtTm = df.format(creDtTm);
+		String txtcreDtTm = df.format(fechaActual);
 		return txtcreDtTm;
 	}
 	public void setCreDtTm(Date creDtTm) {

@@ -59,7 +59,7 @@ public class XmlSEPATransfersFile {
 		
 		/* datos generales y agregados */
 		
-		pagoInfo.setPmtInfId("LOTE-".concat(objetoSepaJla.getIdOperacion())); 
+		pagoInfo.setPmtInfId("LOTE-".concat(objetoSepaJla.getIdOperacion().replace("TR", ""))); 
 		pagoInfo.setPmtMtd("TRF");
 		pagoInfo.setBtchBookg("false");
 		pagoInfo.setInstrPrty("HIGH");

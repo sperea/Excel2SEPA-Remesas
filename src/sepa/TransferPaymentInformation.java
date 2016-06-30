@@ -1047,8 +1047,9 @@ public class TransferPaymentInformation {
 
 	public String getReqdExctnDt2String() {
 		// para mostrar este campo en el formato solicitado: dd-mm-yyyy
+		java.util.Date fechaActual = new Date();
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		String txtReqdExctnDt = df.format(ReqdExctnDt);
+		String txtReqdExctnDt = df.format(fechaActual);
 		return txtReqdExctnDt;
 	}
 
