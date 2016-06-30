@@ -9,6 +9,7 @@ import java.text.DecimalFormatSymbols;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -160,6 +161,8 @@ public class XmlSEPATransfersFile {
 	          Element CreDtTm = doc.createElement("CreDtTm");
 	          CreDtTm.setTextContent(this.groupHeader.getCreDtTmStr());
 	          GrpHdr.appendChild(CreDtTm);
+	          
+	          System.out.println(" -> Generado encabezado XML ");
 	          
 	          /* El header contnua generándose más adelante */
 	          
@@ -352,7 +355,7 @@ public class XmlSEPATransfersFile {
 		          ArrayList<TransferPaymentItem> pagos = auxInfoPago.getPagos();
 		          Iterator<TransferPaymentItem> iteradorPagos = pagos.iterator();
 		          
-		          
+		          System.out.println(" -> Leyendo transferencias ");
 		          while(iteradorPagos.hasNext())
 		          {
 		        	  TransferPaymentItem pagoActual = iteradorPagos.next();
@@ -400,6 +403,7 @@ public class XmlSEPATransfersFile {
 		             InstdAmt.setAttributeNode(attr2);
 		             InstdAmt.setTextContent(pagoActual.getInstdAmt2String());
 			         Amt.appendChild(InstdAmt);
+			         System.out.println(" ##### Importe [ " + pagoActual.getInstdAmt2String() + "]");
 			         
 			         // ++ CdtrAgt
 			         Element CdtrAgt = doc.createElement("CdtrAgt");
@@ -426,6 +430,7 @@ public class XmlSEPATransfersFile {
 			         Element Nm_Cdtr = doc.createElement("Nm");
 			         Nm_Cdtr.setTextContent(pagoActual.getNm_Cdtr());
 			         Cdtr.appendChild(Nm_Cdtr);
+			         System.out.println(" ####### Pago a [ " + pagoActual.getNm_Cdtr() + "]");
 			         
 			         // +++ PstlAdr
 			         Element PstlAdr_Cdtr = doc.createElement("PstlAdr");
@@ -458,6 +463,8 @@ public class XmlSEPATransfersFile {
 			         Element IBAN_Id_CdtrAcct = doc.createElement("IBAN");
 			         IBAN_Id_CdtrAcct.setTextContent(pagoActual.getIBAN());
 			         Id_CdtrAcct.appendChild(IBAN_Id_CdtrAcct);
+			         System.out.println(" ####### IBAN [ " + pagoActual.getIBAN() + "]");
+			         
 			         
 			         // ++ Purp
 			         Element Purp = doc.createElement("Purp");
@@ -476,9 +483,11 @@ public class XmlSEPATransfersFile {
 			         Element Ustrd = doc.createElement("Ustrd");
 			         Ustrd.setTextContent(pagoActual.getUstrd());
 			         RmtInf.appendChild(Ustrd);
+			         
+			         
 		          }	  
 	          }
-	          
+	          System.out.println("    ....OK ");
 	          /* Resto del HEADER */
 	          
 	  		 DecimalFormatSymbols simbolos = DecimalFormatSymbols.getInstance(Locale.ENGLISH);
@@ -488,9 +497,13 @@ public class XmlSEPATransfersFile {
 	          NbOfTxs_header.setTextContent(Integer.toString(numeroTransacciones)); 
 	          GrpHdr.appendChild(NbOfTxs_header);
 	          
+	          System.out.println(" Número de transferencias: ".concat(Integer.toString(numeroTransacciones)));
+	          
 	          Element CtrlSum_header = doc.createElement("CtrlSum");
 	          CtrlSum_header.setTextContent(formateador.format(importeTotal)); 
 	          GrpHdr.appendChild(CtrlSum_header);
+	          
+	          System.out.println(" Importe total: ".concat(formateador.format(importeTotal)));
 	          
 	          // InitgPty
 	          Element InitgPty = doc.createElement("InitgPty");
@@ -524,9 +537,11 @@ public class XmlSEPATransfersFile {
 
 	          TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	          Transformer transformer = transformerFactory.newTransformer();
+	          transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+	          transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	          transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 	          DOMSource source = new DOMSource(doc);
 	          StreamResult result = new StreamResult(new File(filePath));
-
 
 
 	          transformer.transform(source, result);

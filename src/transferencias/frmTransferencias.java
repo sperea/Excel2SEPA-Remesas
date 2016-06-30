@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -30,6 +32,7 @@ import java.awt.Window.Type;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,10 +47,12 @@ public class frmTransferencias {
 	
 	private JButton btnCargarExcel;
 	private JButton btnGenerarxml;
-	private JTextPane textPane;
+	private JTextArea textPane;
 	
 	private String ficheroExcel;
 	private String ficheroXML;
+	
+	PrintStream printStream;
 	
 	/**
 	 * Launch the application.
@@ -102,7 +107,7 @@ public class frmTransferencias {
 				CargarExcel();
 			}
 		});
-		btnCargarExcel.setBounds(30, 50, 173, 25);
+		btnCargarExcel.setBounds(30, 50, 304, 53);
 		frmGeneracinDeFicheros.getContentPane().add(btnCargarExcel);
 		
 		btnGenerarxml = new JButton("GenerarXML");
@@ -112,10 +117,10 @@ public class frmTransferencias {
 				SalvarXML();
 			}
 		});
-		btnGenerarxml.setBounds(250, 50, 173, 25);
+		btnGenerarxml.setBounds(519, 50, 304, 53);
 		frmGeneracinDeFicheros.getContentPane().add(btnGenerarxml);
 		
-		textPane = new JTextPane();
+		textPane = new JTextArea();
 		textPane.setBounds(12, 115, 811, 357);
 		frmGeneracinDeFicheros.getContentPane().add(textPane);
 		
@@ -147,12 +152,17 @@ public class frmTransferencias {
 	                    String PATH = JFC.getAbsolutePath();//obtenemos el path del archivo a guardar
 	                    this.ficheroXML = PATH + JFC.getName();
 	                    
+	                    printStream = new PrintStream(new CustomOutputStream(this.textPane));
+	                    System.setOut(printStream);
+	                    
 	                    GenerarXML();
 	                    
-	                    JOptionPane.showMessageDialog(null,"Guardado exitoso!", "Guardado exitoso!", JOptionPane.INFORMATION_MESSAGE);
+	                    System.out.println(" -> Fichero  generado correctamente");
+	                    
+	                    //JOptionPane.showMessageDialog(null,"¡Guardado exitoso!", "¡Guardado exitoso!", JOptionPane.INFORMATION_MESSAGE);
 	                }
 	            }catch (Exception e){//por alguna excepcion salta un mensaje de error
-	                JOptionPane.showMessageDialog(null,"Error al guardar el archivo!", "Oops! Error", JOptionPane.ERROR_MESSAGE);
+	                JOptionPane.showMessageDialog(null,"¡Error al guardar el archivo!", "¡Oops! Error", JOptionPane.ERROR_MESSAGE);
 	            }
 	}  
 	
@@ -160,14 +170,18 @@ public class frmTransferencias {
 	{
 		ExcelSepa  excel = new ExcelSepa();
 		excel.setRutaExcel(this.ficheroExcel);
+		System.out.println(" -> Abierto fichero Excel ".concat(this.ficheroExcel));
 		JlaInfoSepa datosEntrada = excel.LeerTransacciones();
+		System.out.println(" -> Se han leido las transacciones de ".concat(this.ficheroExcel));
 		XmlSEPATransfersFile xmlSepa = new XmlSEPATransfersFile(datosEntrada); 
 		xmlSepa.GenerateXML(this.ficheroXML);
+		System.out.println(" -> Ganerando XML ");
 
 		/* se comprueba que el fichero generado en la prueba anterior es correcto según el esquema definido en el XSD */
 	       try {
 	           //XML a validar
 	           Source xmlFile = new StreamSource(new File(this.ficheroExcel));
+	           
 	          
 	           //Esquema con el que comparar
 	           Source schemaFile = new StreamSource(new File("xsd/transferencias.xsd"));
